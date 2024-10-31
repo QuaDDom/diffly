@@ -9,14 +9,23 @@ from db.crud import insertar_comparacion, obtener_comparaciones, eliminar_compar
 from interface.chart_visualization import visualizar_cambios
 from interface.comparison_results import mostrar_resultados_comparacion
 from interface.file_upload import cargar_archivo
+from performance.performance_test import medir_tiempo_ejecucion, mostrar_datos_rendimiento
 
 # Configuración de la base de datos
 st.set_page_config(page_title="Diffly", page_icon="📊", layout="wide")
 init_db()
 
-# Inicializar contador de recarga en session_state
+# Inicializar estados en session_state
 if "reload_count" not in st.session_state:
     st.session_state.reload_count = 0
+if "show_download_dialog" not in st.session_state:
+    st.session_state.show_download_dialog = False
+if "resultado_bytes" not in st.session_state:
+    st.session_state.resultado_bytes = None
+if "id_seleccionado" not in st.session_state:
+    st.session_state.id_seleccionado = None
+if "tiempos_registro" not in st.session_state:
+    st.session_state.tiempos_registro = {}
 
 # Función para convertir DataFrame en BytesIO para almacenamiento en la DB
 def convertir_a_bytes(df):
@@ -97,6 +106,9 @@ def main():
     st.title("📊 Diffly")
     st.subheader("Detecta automáticamente cambios en inventarios o listas de proveedores utilizando archivos de Excel.")
 
+    # Checkbox para mostrar los datos de rendimiento
+    mostrar_rendimiento = st.checkbox("Mostrar datos de rendimiento")
+
     # Panel lateral para historial
     with st.sidebar:
         st.header("📜 Historial de Comparaciones")
@@ -115,12 +127,10 @@ def main():
                     st.write("### Resultado de la Comparación Seleccionada")
                     st.dataframe(resultado_df)
                     
-                    st.download_button(
-                        label="📅 Descargar Resultado",
-                        data=resultado_bytes,
-                        file_name=f"resultado_comparacion_{id_seleccionado}.xlsx",
-                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                    )
+                    # Guardar resultado en el estado de la sesión para ser descargado
+                    st.session_state.resultado_bytes = resultado_bytes
+                    st.session_state.id_seleccionado = id_seleccionado
+                    st.session_state.show_download_dialog = True
                 except Exception as e:
                     st.error(f"Error al cargar el resultado de la comparación: {e}")
             
@@ -139,6 +149,21 @@ def main():
 
             if st.button("Eliminar Comparación"):
                 eliminar_dialog()
+
+    # Mostrar diálogo de descarga si se ha activado
+    if st.session_state.show_download_dialog:
+        @st.dialog("Descargar Resultado", width="small")
+        def descargar_dialog():
+            nombre_archivo = st.text_input("Nombre del archivo (sin extensión):", value=f"resultado_comparacion_{st.session_state.id_seleccionado}")
+            if st.button("Descargar", key="descargar_boton"):
+                st.download_button(
+                    label="📁 Descargar Archivo",
+                    data=st.session_state.resultado_bytes,
+                    file_name=f"{nombre_archivo}.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                )
+                st.session_state.show_download_dialog = False
+        descargar_dialog()
 
     # Cargar Archivos y Comparar
     st.write("### Cargar y Comparar Archivos")
@@ -162,7 +187,17 @@ def main():
             if st.button("Comparar Archivos"):
                 with st.spinner("🔍 Comparando archivos..."):
                     try:
-                        plantilla_procesada, cambios, cambios_detallados = comparar_listas_dinamico(plantilla_df, actualizada_df)
+                        # Medir el tiempo de ejecución de la comparación
+                        resultado, tiempo_comparacion = medir_tiempo_ejecucion(
+                            comparar_listas_dinamico, 
+                            "comparar_listas_dinamico", 
+                            plantilla_df, 
+                            actualizada_df
+                        )
+                        plantilla_procesada, cambios, cambios_detallados = resultado
+                        
+                        # Guardar el tiempo de la comparación
+                        st.session_state.tiempos_registro["comparar_listas_dinamico"] = tiempo_comparacion
                         
                         # Mostrar resultados
                         mostrar_resultados_comparacion(cambios, cambios_detallados, plantilla_procesada)
@@ -185,6 +220,10 @@ def main():
                         )
                     except Exception as e:
                         st.error(f"Error al comparar los archivos: {e}")
+
+                    # Mostrar los datos de rendimiento si el checkbox está activado
+                    if mostrar_rendimiento:
+                        mostrar_datos_rendimiento(st.session_state.tiempos_registro)
 
 if __name__ == "__main__":
     main()

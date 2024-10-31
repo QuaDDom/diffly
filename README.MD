@@ -85,13 +85,13 @@ diffly/
 
 *Sube tus archivos de referencia y actualizados para una comparación rápida.*
 
-![Subir Archivos](sandbox:/mnt/data/image.png)
+![Subir Archivos](https://i.imgur.com/fmcllhv.png)
 
 ### Visualizar Cambios
 
 *Visualiza un resumen de los cambios con gráficos y detalles específicos por columna.*
 
-![Visualizar Cambios](https://i.imgur.com/3duJgcr.png)
+![Visualizar Cambios](https://i.imgur.com/xJG3suV.png)
 
 ### Gestionar Historial
 

@@ -81,19 +81,19 @@ diffly/
 
 *Sube tus archivos de referencia y actualizados para una comparación rápida.*
 
-![Captura de Pantalla de Subida](link_a_captura_subida.png)
+![Captura de Pantalla de Subida](https://i.imgur.com/M2SWpTY.png)
 
 ### Visualizar Cambios
 
 *Visualiza un resumen de los cambios con gráficos.*
 
-![Captura de Pantalla de Visualización](link_a_captura_visualizacion.png)
+![Captura de Pantalla de Visualización](https://i.imgur.com/3duJgcr.png)
 
 ### Gestionar Historial
 
 *Accede a comparaciones previas y descarga los resultados.*
 
-![Captura de Pantalla del Historial](link_a_captura_historial.png)
+![Captura de Pantalla del Historial](https://i.imgur.com/oUiwzeq.png)
 
 ## Contribuciones
 

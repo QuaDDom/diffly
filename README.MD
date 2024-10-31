@@ -95,8 +95,6 @@ diffly/
 
 ![Captura de Pantalla del Historial](link_a_captura_historial.png)
 
-> **Nota**: Reemplaza los enlaces de las imágenes anteriores con enlaces reales o rutas a las capturas de pantalla en el repositorio.
-
 ## Contribuciones
 
 ¡Las contribuciones son bienvenidas! Por favor, abre un issue o crea un pull request con tus cambios.

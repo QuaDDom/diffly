@@ -18,9 +18,10 @@ Diffly es una aplicación diseñada para simplificar y automatizar la comparaci�
 
 - **Comparación Automática de Datos**: Sube dos archivos de Excel para detectar y visualizar rápidamente las diferencias entre ellos.
 - **Seguimiento Detallado de Cambios**: Visualiza modificaciones específicas a nivel de columna, identificando tanto los valores anteriores como los nuevos.
-- **Análisis Visual**: Genera gráficos de pastel para analizar visualmente el tipo y la distribución de los cambios.
+- **Análisis Visual**: Genera gráficos de pastel y barras para analizar visualmente el tipo y la distribución de los cambios.
 - **Gestión de Historial**: Guarda y administra un historial de comparaciones para futuras referencias.
 - **Exportación de Datos**: Descarga los resultados de la comparación en un archivo de Excel procesado.
+- **Rendimiento en Tiempo Real**: Opción para monitorear tiempos de ejecución y eficiencia en cada proceso de comparación.
 
 ## Instalación
 
@@ -56,6 +57,7 @@ Diffly es una aplicación diseñada para simplificar y automatizar la comparaci�
 2. **Ver Diferencias**: Haz clic en "Comparar Archivos" para generar una comparación detallada, que incluye resúmenes visuales y cambios específicos por columna.
 3. **Gestionar Historial**: Accede a las comparaciones guardadas, visualiza los detalles y descarga los resultados anteriores.
 4. **Eliminar Comparaciones**: Elimina comparaciones antiguas del historial cuando sea necesario.
+5. **Monitorear Rendimiento**: Activa la opción de mostrar rendimiento para visualizar gráficos de tiempos de ejecución y optimización en tiempo real.
 
 ## Estructura del Proyecto
 
@@ -68,6 +70,8 @@ diffly/
 │   ├── chart_visualization.py # Funciones de visualización de gráficos
 │   ├── comparison_results.py  # Interfaz para mostrar resultados de comparación
 │   ├── file_upload.py         # Funciones para la carga y procesamiento de archivos
+├── performance/
+│   ├── performance_test.py     # Funciones para monitoreo y visualización de rendimiento
 ├── main.py                    # Script principal de la aplicación
 ├── procesamiento.py           # Lógica principal de procesamiento y comparación
 ├── comparaciones.db           # Base de datos SQLite para almacenar el historial
@@ -81,19 +85,19 @@ diffly/
 
 *Sube tus archivos de referencia y actualizados para una comparación rápida.*
 
-![Captura de Pantalla de Subida](https://i.imgur.com/M2SWpTY.png)
+![Subir Archivos](sandbox:/mnt/data/image.png)
 
 ### Visualizar Cambios
 
-*Visualiza un resumen de los cambios con gráficos.*
+*Visualiza un resumen de los cambios con gráficos y detalles específicos por columna.*
 
-![Captura de Pantalla de Visualización](https://i.imgur.com/3duJgcr.png)
+![Visualizar Cambios](https://i.imgur.com/3duJgcr.png)
 
 ### Gestionar Historial
 
 *Accede a comparaciones previas y descarga los resultados.*
 
-![Captura de Pantalla del Historial](https://i.imgur.com/oUiwzeq.png)
+![Historial](https://i.imgur.com/oUiwzeq.png)
 
 ## Contribuciones
 
